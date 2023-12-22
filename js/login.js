@@ -34,7 +34,7 @@ function empty(user){
 function search(user){
     for(var i=0;i<users.length;i++){
         if(users[i].email==user.email&&users[i].pass==user.pass){
-            window.open(`./home.html?welcome=${users[i].name}`,'_blank"');
+            window.open(`./home.html?welcome=${users[i].name}`,'_self');
             return true;
         }
     }

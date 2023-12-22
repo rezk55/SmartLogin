@@ -10,6 +10,9 @@ if(localStorage.getItem('users')!=null){
     users = JSON.parse(localStorage.getItem('users'));
 }
 
+userName.addEventListener('keyup',validName);
+userEmail.addEventListener('keyup',validEmail);
+userPass.addEventListener('keyup',validPass);
 btnSignUp.addEventListener('click',signUp);
 
 function signUp(){
@@ -28,7 +31,9 @@ function signUp(){
     } else {
         hide(alert);
         alert.children[0].classList.remove('d-none');
-        addUser(user);
+        if(allValidate()){
+            addUser(user);
+        }
     }
 }
 
@@ -55,3 +60,57 @@ function find(email){
 function empty(user){
     return (user.name&&user.email&&user.pass)=='';
 }
+
+function valid(el){
+    el.classList.remove('is-invalid');
+    el.classList.add('is-valid');
+}
+
+function inValid(el){
+    el.classList.remove('is-valid');
+    el.classList.add('is-invalid');
+}
+
+function validName(){
+    var name = userName.value;
+    var regex = /^[a-zA-Z]{2,}[0-9]{0,}/;
+    if(regex.test(name)){
+        valid(this);
+    } else {
+        inValid(this);
+    }
+}
+
+function validEmail(){
+    var email = userEmail.value;
+    var regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ ;
+    if(regex.test(email)){
+       valid(this);
+    } else {
+        inValid(this);
+    }
+}
+
+function validPass(){
+    var pass = userPass.value;
+    var regex = /\w{6,}/;
+    if(regex.test(pass)){
+        valid(this);
+    } else {
+        inValid(this);
+    }
+}
+
+function allValidate(){
+    var name = userName.value;
+    var email = userEmail.value;
+    var pass = userPass.value;
+    var regexName = /^[a-zA-Z]{2,}[0-9]{0,}/;
+    var regexEmail =  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    var regexPass = /\w{6,}/;
+
+    return regexName.test(name)&& regexEmail.test(email)&&regexPass.test(pass);
+    
+}
+
+
